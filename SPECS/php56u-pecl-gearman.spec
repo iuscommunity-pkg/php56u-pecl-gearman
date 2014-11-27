@@ -3,38 +3,42 @@
 %{!?__php:       %global __php        %{_bindir}/php}
 
 %global pecl_name gearman
+%global php_base php56u
 %global with_zts  0%{?__ztsphp:1}
-%if "%{php_version}" < "5.6"
-%global ini_name  %{pecl_name}.ini
-%else
 %global ini_name  40-%{pecl_name}.ini
-%endif
 
-Name:		php-pecl-gearman
-Version:	1.1.2
-Release:	1%{?dist}
+Name:           %{php_base}-pecl-gearman
+Version:        1.1.2
+Release:        1.ius%{?dist}
 Summary:	PHP wrapper to libgearman
 
-Group:		Development/Tools
-License:	PHP
+Group:          Development/Tools
+License:        PHP
 URL:		http://gearman.org
-Source0:	http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
+Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 
-BuildRequires:	libgearman-devel > 1.1.0
-BuildRequires:	php-devel
-BuildRequires:	php-pear
+BuildRequires:  libgearman-devel > 1.1.0
+BuildRequires:  %{php_base}-devel
+BuildRequires:  %{php_base}-pear
 # Required by phpize
-BuildRequires:	autoconf, automake, libtool
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 
-Requires:	php(zend-abi) = %{php_zend_api}
-Requires:	php(api) = %{php_core_api}
+Requires:       %{php_base}(zend-abi) = %{php_zend_api}
+Requires:       %{php_base}(api) = %{php_core_api}
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 
-Provides:	php-%{pecl_name} = %{version}
-Provides:	php-%{pecl_name}%{?_isa} = %{version}
-Provides:	php-pecl(%{pecl_name}) = %{version}
-Provides:	php-pecl(%{pecl_name})%{?_isa} = %{version}
+Provides:       php-%{pecl_name} = %{version}
+Provides:       php-%{pecl_name}%{?_isa} = %{version}
+Provides:       php-pecl(%{pecl_name}) = %{version}
+Provides:       php-pecl(%{pecl_name})%{?_isa} = %{version}
+
+Provides:       %{php_base}-%{pecl_name} = %{version}
+Provides:       %{php_base}-%{pecl_name}%{?_isa} = %{version}
+Provides:       %{php_base}-pecl(%{pecl_name}) = %{version}
+Provides:       %{php_base}-pecl(%{pecl_name})%{?_isa} = %{version}
 
 %if 0%{?fedora} < 20 && 0%{?rhel} < 7
 # Filter shared private
@@ -79,28 +83,28 @@ cp -pr NTS ZTS
 cd NTS
 %{_bindir}/phpize
 %configure  --with-php-config=%{_bindir}/php-config
-make %{?_smp_mflags}
+%{__make} %{?_smp_mflags}
 
 %if %{with_zts}
 cd ../ZTS
 %{_bindir}/zts-phpize
 %configure  --with-php-config=%{_bindir}/zts-php-config
-make %{?_smp_mflags}
+%{__make} %{?_smp_mflags}
 %endif
 
 
 %install
-make -C NTS install INSTALL_ROOT=%{buildroot}
+%{__make} -C NTS install INSTALL_ROOT=%{buildroot}
 
 # Install XML package description
-install -Dpm 644 package.xml %{buildroot}%{pecl_xmldir}/%{name}.xml
+%{__install} -Dpm 644 package.xml %{buildroot}%{pecl_xmldir}/%{name}.xml
 
 # install config file
-install -Dpm644 %{ini_name} %{buildroot}%{php_inidir}/%{ini_name}
+%{__install} -Dpm644 %{ini_name} %{buildroot}%{php_inidir}/%{ini_name}
 
 %if %{with_zts}
-make -C ZTS install INSTALL_ROOT=%{buildroot}
-install -Dpm644 %{ini_name} %{buildroot}%{php_ztsinidir}/%{ini_name}
+%{__make} -C ZTS install INSTALL_ROOT=%{buildroot}
+%{__install} -Dpm644 %{ini_name} %{buildroot}%{php_ztsinidir}/%{ini_name}
 %endif
 
 # Documentation
