@@ -90,14 +90,14 @@ cp -pr NTS ZTS
 %build
 pushd NTS
 %{_bindir}/phpize
-%configure  --with-php-config=%{_bindir}/php-config
+%configure --with-%{pecl_name}=%{prefix} --with-php-config=%{_bindir}/php-config
 %{__make} %{?_smp_mflags}
 popd
 
 %if %{with_zts}
 pushd ZTS
 %{_bindir}/zts-phpize
-%configure  --with-php-config=%{_bindir}/zts-php-config
+%configure --with-%{pecl_name}=%{prefix} --with-php-config=%{_bindir}/zts-php-config
 %{__make} %{?_smp_mflags}
 popd
 %endif
@@ -168,6 +168,7 @@ fi
 - Conflict with stock package
 - Install package.xml as %%{pecl_name}.xml, not %%{name}.xml
 - Explicitly require %{php_base}-pear for scriptlets
+- Use standard PHP configure flags
 
 * Thu Nov 27 2014 Carl George <carl.george@rackspace.com> - 1.1.2-1.ius
 - Port from Fedora to IUS
