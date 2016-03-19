@@ -26,8 +26,8 @@ BuildRequires:  libtool
 
 Requires:       %{php_base}(zend-abi) = %{php_zend_api}
 Requires:       %{php_base}(api) = %{php_core_api}
-Requires(post): %{__pecl}
-Requires(postun): %{__pecl}
+Requires(post):   %{php_base}-pear
+Requires(postun): %{php_base}-pear
 
 # provide the stock name
 Provides:       php-pecl-%{pecl_name} = %{version}
@@ -167,6 +167,7 @@ fi
 - Clean up filters
 - Conflict with stock package
 - Install package.xml as %%{pecl_name}.xml, not %%{name}.xml
+- Explicitly require %{php_base}-pear for scriptlets
 
 * Thu Nov 27 2014 Carl George <carl.george@rackspace.com> - 1.1.2-1.ius
 - Port from Fedora to IUS
