@@ -3,18 +3,17 @@
 %{!?__php:       %global __php        %{_bindir}/php}
 
 %global pecl_name gearman
-%global php_base php56u
+%global php_base  php56u
 %global with_zts  0%{?__ztsphp:1}
 %global ini_name  40-%{pecl_name}.ini
 
 Name:           %{php_base}-pecl-gearman
 Version:        1.1.2
 Release:        1.ius%{?dist}
-Summary:	PHP wrapper to libgearman
-
+Summary:        PHP wrapper to libgearman
 Group:          Development/Tools
 License:        PHP
-URL:		http://gearman.org
+URL:            http://gearman.org
 Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 
 BuildRequires:  libgearman-devel > 1.1.0
@@ -69,7 +68,7 @@ if test "x${extver}" != "x%{version}"; then
    exit 1
 fi
 
-cat >%{ini_name} <<EOF
+cat > %{ini_name} <<EOF
 ; enable %{pecl_name} extension
 extension=%{pecl_name}.so
 EOF
@@ -130,8 +129,9 @@ done
 %post
 %{pecl_install} %{pecl_xmldir}/%{name}.xml >/dev/null || :
 
+
 %postun
-if [ $1 -eq 0 ] ; then
+if [ $1 -eq 0 ]; then
     %{pecl_uninstall} %{pecl_name} >/dev/null || :
 fi
 
