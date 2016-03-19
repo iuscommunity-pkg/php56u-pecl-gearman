@@ -9,7 +9,7 @@
 
 Name:           %{php_base}-pecl-gearman
 Version:        1.1.2
-Release:        1.ius%{?dist}
+Release:        2.ius%{?dist}
 Summary:        PHP wrapper to libgearman
 Group:          Development/Tools
 License:        PHP
@@ -29,13 +29,19 @@ Requires:       %{php_base}(api) = %{php_core_api}
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 
+# provide the stock name
+Provides:       php-pecl-%{pecl_name} = %{version}
+Provides:       php-pecl-%{pecl_name}%{?_isa} = %{version}
+
+# provide the stock and IUS names without pecl
 Provides:       php-%{pecl_name} = %{version}
 Provides:       php-%{pecl_name}%{?_isa} = %{version}
-Provides:       php-pecl(%{pecl_name}) = %{version}
-Provides:       php-pecl(%{pecl_name})%{?_isa} = %{version}
-
 Provides:       %{php_base}-%{pecl_name} = %{version}
 Provides:       %{php_base}-%{pecl_name}%{?_isa} = %{version}
+
+# provide the stock and IUS names in pecl() format
+Provides:       php-pecl(%{pecl_name}) = %{version}
+Provides:       php-pecl(%{pecl_name})%{?_isa} = %{version}
 Provides:       %{php_base}-pecl(%{pecl_name}) = %{version}
 Provides:       %{php_base}-pecl(%{pecl_name})%{?_isa} = %{version}
 
@@ -151,6 +157,9 @@ fi
 
 
 %changelog
+* Sat Mar 19 2016 Carl George <carl.george@rackspace.com> - 1.1.2-2.ius
+- Clean up provides
+
 * Thu Nov 27 2014 Carl George <carl.george@rackspace.com> - 1.1.2-1.ius
 - Port from Fedora to IUS
 
