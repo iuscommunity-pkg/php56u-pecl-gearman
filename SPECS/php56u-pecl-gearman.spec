@@ -151,6 +151,9 @@ fi
 
 
 %changelog
+* Thu Nov 27 2014 Carl George <carl.george@rackspace.com> - 1.1.2-1.ius
+- Port from Fedora to IUS
+
 * Tue Sep  9 2014 Remi Collet <remi@fedoraproject.org> - 1.1.2-1
 - update to 1.1.2
 - cleanup and modernize the spec file
