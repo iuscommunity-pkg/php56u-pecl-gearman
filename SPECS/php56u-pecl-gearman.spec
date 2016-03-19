@@ -88,16 +88,18 @@ cp -pr NTS ZTS
 
 
 %build
-cd NTS
+pushd NTS
 %{_bindir}/phpize
 %configure  --with-php-config=%{_bindir}/php-config
 %{__make} %{?_smp_mflags}
+popd
 
 %if %{with_zts}
-cd ../ZTS
+pushd ZTS
 %{_bindir}/zts-phpize
 %configure  --with-php-config=%{_bindir}/zts-php-config
 %{__make} %{?_smp_mflags}
+popd
 %endif
 
 
