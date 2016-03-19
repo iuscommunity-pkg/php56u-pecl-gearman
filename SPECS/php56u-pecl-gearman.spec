@@ -45,6 +45,9 @@ Provides:       php-pecl(%{pecl_name})%{?_isa} = %{version}
 Provides:       %{php_base}-pecl(%{pecl_name}) = %{version}
 Provides:       %{php_base}-pecl(%{pecl_name})%{?_isa} = %{version}
 
+# conflict with the stock name
+Conflicts:      php-pecl-%{pecl_name} < %{version}
+
 # RPM 4.8
 %{?filter_provides_in: %filter_provides_in %{php_extdir}/.*\.so$}
 %{?filter_setup}
@@ -160,6 +163,7 @@ fi
 * Sat Mar 19 2016 Carl George <carl.george@rackspace.com> - 1.1.2-2.ius
 - Clean up provides
 - Clean up filters
+- Conflict with stock package
 
 * Thu Nov 27 2014 Carl George <carl.george@rackspace.com> - 1.1.2-1.ius
 - Port from Fedora to IUS
