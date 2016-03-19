@@ -19,10 +19,6 @@ Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 BuildRequires:  libgearman-devel > 1.1.0
 BuildRequires:  %{php_base}-devel
 BuildRequires:  %{php_base}-pear
-# Required by phpize
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
 
 Requires:       %{php_base}(zend-abi) = %{php_zend_api}
 Requires:       %{php_base}(api) = %{php_core_api}
@@ -169,6 +165,7 @@ fi
 - Install package.xml as %%{pecl_name}.xml, not %%{name}.xml
 - Explicitly require %{php_base}-pear for scriptlets
 - Use standard PHP configure flags
+- Remove redundant build requirements
 
 * Thu Nov 27 2014 Carl George <carl.george@rackspace.com> - 1.1.2-1.ius
 - Port from Fedora to IUS
