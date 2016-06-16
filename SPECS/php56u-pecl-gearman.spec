@@ -5,7 +5,7 @@
 
 Name:           %{php_base}-pecl-gearman
 Version:        1.1.2
-Release:        2.ius%{?dist}
+Release:        3.ius%{?dist}
 Summary:        PHP wrapper to libgearman
 Group:          Development/Tools
 License:        PHP
@@ -42,9 +42,8 @@ Conflicts:      php-pecl-%{pecl_name} < %{version}
 
 # RPM 4.8
 %{?filter_provides_in: %filter_provides_in %{php_extdir}/.*\.so$}
+%{?filter_provides_in: %filter_provides_in %{php_ztsextdir}/.*\.so$}
 %{?filter_setup}
-# RPM 4.9
-%global __provides_exclude_from %{?__provides_exclude_from:%__provides_exclude_from|}%{php_extdir}/.*\\.so$
 
 
 %description
@@ -154,6 +153,9 @@ fi
 
 
 %changelog
+* Thu Jun 16 2016 Ben Harper <ben.harper@rackspace.com> - 1.1.2-3.ius
+- update filters to include zts
+
 * Sat Mar 19 2016 Carl George <carl.george@rackspace.com> - 1.1.2-2.ius
 - Clean up provides
 - Clean up filters
